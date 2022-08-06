@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-// type JSONResponse = {
-//   data?: {
-//     pokemon: Omit<
-//   }
-// }
+// var sdmxrest = require("sdmx-rest");
 
 function FetchComponent() {
   const [data, setData] = useState<any>(null);
@@ -29,7 +24,19 @@ function FetchComponent() {
         setData(entries);
       });
   }, []);
-  // console.log("Data", data);
+
+  // useEffect(() => {
+  //   var query = { flow: "EXR", key: "A.CHF.EUR.SP00.A" };
+
+  //   sdmxrest
+  //     .request(query, "ECB")
+  //     .then(function (data) {
+  //       console.log(data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log("something went wrong: " + error);
+  //     })  
+  // }, []);
   return (
     <div>
       <p>Fetched Data</p>
