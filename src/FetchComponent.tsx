@@ -25,18 +25,30 @@ function FetchComponent() {
       });
   }, []);
 
-  // useEffect(() => {
+  // useEffect(() => 
   //   var query = { flow: "EXR", key: "A.CHF.EUR.SP00.A" };
 
   //   sdmxrest
   //     .request(query, "ECB")
-  //     .then(function (data) {
+  //     .then((data) => {
   //       console.log(data);
   //     })
-  //     .catch(function (error) {
+  //     .catch((error) => {
   //       console.log("something went wrong: " + error);
-  //     })  
+  //     });
+  //   // sdmxrest
+  //   //   .request2({ flow: "EXR", key: "A.CHF.EUR.SP00.A" }, "ECB")
+  //   //   .then(function (response) {
+  //   //     return response.json();
+  //   //   })
+  //   //   .then(function (body) {
+  //   //     console.log(body);
+  //   //   })
+  //   //   .catch(function (ex) {
+  //   //     console.log("parsing failed", ex);
+  //   //   });
   // }, []);
+  
   return (
     <div>
       <p>Fetched Data</p>
