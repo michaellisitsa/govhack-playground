@@ -7,34 +7,41 @@ import React, { useEffect, useState } from "react";
 // }
 
 function FetchComponent() {
-  const [data, setData] = useState<string | null>(null);
+  const [data, setData] = useState<any>(null);
   useEffect(() => {
     const urlString =
-      "https://agipi.data.abs.gov.au/data/RES_DWELL/3.1GSYD.Q?startPeriod=2019";
+      "https://api.data.abs.gov.au/data/RES_DWELL/3.1GSYD.Q?startPeriod=2019";
     fetch(urlString, {
       headers: { accept: "application/vnd.sdmx.data+json" },
     })
       .then((response) => response.json())
       .then((dataString) => {
-        setData(dataString.data.dataSets[0].series["0:0:0"]);
+        const periods =
+          dataString.data?.structure?.dimensions?.observation?.[0].values;
+        const valuesObj =
+          dataString.data?.dataSets?.[0].series["0:0:0"].observations;
+        const entries = periods.map((period, index) => {
+          return {
+            period: period.name,
+            value: valuesObj[index][0],
+          };
+        });
+        setData(entries);
       });
   }, []);
-  console.log("Data", data);
+  // console.log("Data", data);
   return (
     <div>
       <p>Fetched Data</p>
       <ol>
         {data &&
-          Object.entries(data.observations).map((key, value) => (
-            <li key={key}>
-              {key}: {value}
+          data.map(({ period, value }) => (
+            <li key={period}>
+              <p>{period}</p>
+              <p>{value}</p>
             </li>
           ))}
       </ol>
-      {/* <ol>
-        {data && data.annotations.map((annotation) => <li>{annotation}</li>)}
-      </ol> */}
-      {/* <p>{data}</p> */}
     </div>
   );
 }
