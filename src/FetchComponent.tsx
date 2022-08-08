@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-// var sdmxrest = require("sdmx-rest");
+// var MetadataDetail = require("sdmx-rest").metadata.MetadataDetail;
+var sdmxrest = require("sdmx-rest");
 
 function FetchComponent() {
   const [data, setData] = useState<any>(null);
+  const [dataFlows, setDataFlows] = useState<any>([])
+
   useEffect(() => {
     const urlString =
       "https://api.data.abs.gov.au/data/RES_DWELL/3.1GSYD.Q?startPeriod=2019";
@@ -25,29 +28,16 @@ function FetchComponent() {
       });
   }, []);
 
-  // useEffect(() => 
-  //   var query = { flow: "EXR", key: "A.CHF.EUR.SP00.A" };
-
-  //   sdmxrest
-  //     .request(query, "ECB")
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log("something went wrong: " + error);
-  //     });
-  //   // sdmxrest
-  //   //   .request2({ flow: "EXR", key: "A.CHF.EUR.SP00.A" }, "ECB")
-  //   //   .then(function (response) {
-  //   //     return response.json();
-  //   //   })
-  //   //   .then(function (body) {
-  //   //     console.log(body);
-  //   //   })
-  //   //   .catch(function (ex) {
-  //   //     console.log("parsing failed", ex);
-  //   //   });
-  // }, []);
+  useEffect(() => {
+    const ABS = sdmxrest.getService({ url: "https://api.data.abs.gov.au", api: "v1.0.0" });
+    const dataFlowListQuery = `${ABS.url}/dataflow/ABS`
+    fetch(dataFlowListQuery, {
+      headers: { accept: "application/vnd.sdmx.structure+json" },
+    })
+      .then((response) => response.json())
+      .then(data => { console.log(data.data.dataflows); setDataFlows(data.data.dataflows) })
+      .catch(error => console.log(error))
+  }, []);
   
   return (
     <div>
@@ -58,6 +48,14 @@ function FetchComponent() {
             <li key={period}>
               <p>{period}</p>
               <p>{value}</p>
+            </li>
+          ))}
+      </ol>
+      <ol>
+        {dataFlows &&
+          dataFlows.map((flow) => (
+            <li key={flow.id}>
+              <p>{flow.id}</p>
             </li>
           ))}
       </ol>
