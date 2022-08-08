@@ -35,19 +35,20 @@ function FetchComponent() {
     <div>
       <p>Fetched Data {status}</p>
       <ol>
-      {entries &&
-        entries.map(({ period, value }) => (
-          <li key={period}>
-            <p>{period}</p>
-            <p>{value}</p>
-          </li>
-        ))}
-    </ol>
+        {entries &&
+          entries.map(({ period, value }) => (
+            <li key={period}>
+              <p>{period}</p>
+              <p>{value}</p>
+            </li>
+          ))}
+      </ol>
       <ol>
         {dataFlows &&
           dataFlows.map((flow) => (
             <li key={flow.id}>
-              <p>{flow.id}</p>
+              <b>{flow.id}</b>
+              <p>{flow.name.slice(0, 50)}</p>
             </li>
           ))}
       </ol>
