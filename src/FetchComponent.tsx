@@ -22,7 +22,7 @@ function FetchComponent() {
   }) : [];
 
   useEffect(() => {
-    const dataFlowListQuery = `${ABS.url}/dataflow/ABS`
+  const dataFlowListQuery = `${ABS.url}/dataflow/ABS`
     fetch(dataFlowListQuery, {
       headers: { accept: "application/vnd.sdmx.structure+json" },
     })
