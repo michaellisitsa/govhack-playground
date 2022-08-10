@@ -21,7 +21,14 @@ from datetime import datetime
 
 def index(request):
     # comment = Comment(email="michael@example.com", content='foo bar')
-    serializer = CommentSerializer({"email": "a@b.com", "content": "test", "created": datetime.now()})
+    serializer = CommentSerializer(
+        {"email": "a@b.com", "content": "test", "created": datetime.now()})
+    deserializer = CommentSerializer(data=serializer.data)
+    if deserializer.is_valid():
+        logging.warn("deserialized correctly")
+    else:
+        logging.warn('incorrectly deserialized')
+        logging.warn(serializer.errors)
     logging.warn(serializer)
     json = JSONRenderer().render(serializer.data)
     logging.warn(json)
